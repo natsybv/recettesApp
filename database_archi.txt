@@ -1,0 +1,18 @@
+Users:
+  User1:
+    id
+    username
+    urlImage
+    description
+		
+
+Recettes:
+  recette1:
+    chef
+    id
+    username
+    urlImage
+    nom
+    ingredients
+    instructions
+
