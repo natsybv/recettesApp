@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({ details }) => {
+const Card = ({ details, accueil }) => {
     const ingredients = details.ingredients
         .split(',')
         .map(item => <li key={item}>{item}</li>)
@@ -57,6 +57,9 @@ const Card = ({ details }) => {
             </div>
             <div className='recette'>
                 <h2>{details.nom}</h2>
+                {
+                    accueil ? <p><a href={`http://localhost:3000/pseudo/${details.username}`}>crée par : {details.username}</a></p> : <span/>
+                }
                 <ul className="liste-ingredients">
                     {ingredients}
                 </ul>

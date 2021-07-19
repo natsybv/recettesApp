@@ -16,6 +16,7 @@ class Accueil extends Component {
 
     state = {
         users: {},
+        recettes: {}
     }
 
     static cpt = 0
@@ -41,14 +42,21 @@ class Accueil extends Component {
 
         
       componentDidMount () {
-        this.ref = base.syncState(`/users`, {
+        this.ref = base.syncState(`/recettes`, {
             context: this,
-            state: 'users'
+            state: 'recettes'
         })
+
+        this.ref2 = base.syncState(`/users`, {
+          context: this,
+          state: 'users'
+      })
+
       }
       
       componentWillUnmount () {
         base.removeBinding(this.ref)
+        base.removeBinding(this.ref2)
       }
       
       compteur(key, recettes, recette){
@@ -59,22 +67,26 @@ class Accueil extends Component {
       }
 
     render () {
-        //console.log(this.state.users);
-
-        const recettes = Object.keys(this.state.users)
-                            .map(key => this.state.users[key]['recettes'])
-
+        
         const profils = Object.keys(this.state.users)
-                            .map(key => this.state.users[key]['profils'])
+                          .map(key => this.state.users[key])
+
+        const recettes = Object.keys(this.state.recettes)
+                            .map(key => this.state.recettes[key])
 
         let cards = Object.keys(recettes)
-                        .map(key => Object.entries(recettes[key]).map(
-                                        ([clé, valeur]) => <Card key={clé} details={recettes[key][clé]}/>))
+                        .map(key => <Card key={key} details={recettes[key]} accueil={true} />)
+                        .sort((a, b) => a.itemM > b.itemM ? 1 : -1)
+
+        let profil = Object.keys(profils)
+                        .map(key => <Profil key={key} info={profils[key]}/>)
+                        .sort((a, b) => a.itemM > b.itemM ? 1 : -1)
+
             
-        cards = Object.keys(cards).map(key => Object.keys(cards[key])
+        /*cards = Object.keys(cards).map(key => Object.keys(cards[key])
                                         .map(clef => cards[key][clef]['key'])
                                         .sort((a, b) => a.itemM > b.itemM ? 1 : -1)
-                                        .map(recette => this.compteur(key, recettes, recette)))
+                                        .map(recette => this.compteur(key, recettes, recette)))*/
                                         
         console.log(Accueil.cpt)   
         return (

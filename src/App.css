@@ -283,7 +283,18 @@ footer {
 	.bodyLeft h2{
 		text-align:center;
 		color:pink;
-		margin:1%;
+		margin:1px;
+	}
+
+	.bodyLeft p{
+		text-align:center;
+		text-decoration: underline;
+		color:pink;
+		margin-bottom: 1px;
+	}
+
+	.bodyLeft p a{
+		color:plum;
 	}
 	
 	.bodyRight{

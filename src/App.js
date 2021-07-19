@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.ref = base.syncState(`/users/${this.state.pseudo}/recettes`, {
+    this.ref = base.syncState(`/recettes`, {
         context: this,
         state: 'recettes'
     })
@@ -28,6 +28,12 @@ class App extends Component {
   
   componentWillUnmount () {
     base.removeBinding(this.ref)
+  }
+
+  filtrerRecettes(key){
+    if (this.state.recettes[key]['username'] === this.state.pseudo){
+      return <Card key={key} details={this.state.recettes[key]} accueil={false} />
+    }
   }
   
   ajouterRecette = (recette, id) => {
@@ -52,7 +58,7 @@ class App extends Component {
 
   render () {
     const cards = Object.keys(this.state.recettes)
-      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+      .map(key => this.filtrerRecettes(key))
 
     return (
       <div className='box'>

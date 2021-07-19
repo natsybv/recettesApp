@@ -26,6 +26,12 @@ class Admin extends Component {
     handleAuth = async authData => {
         const box = await base.fetch(`users/${this.props.pseudo}`, { context: this})
 
+        if (!box.username){
+            await base.post(`/users/${this.props.pseudo}/username`, {
+                data: this.props.pseudo
+                })
+        }
+
         if (!box.chef){
             await base.post(`/users/${this.props.pseudo}/chef`, {
             data: authData.user.uid
@@ -50,6 +56,18 @@ class Admin extends Component {
         console.log('Déconnexion')
         await firebase.auth().signOut()
         this.setState({ uid: null })
+    }
+
+    filtrerRecettes(key){
+        const { recettes, majRecette, supprimerRecette } = this.props
+        if (recettes[key]['username'] === this.props.pseudo){
+          return <AdminForm 
+                    key={key}
+                    id={key}
+                    majRecette = {majRecette}
+                    supprimerRecette = {supprimerRecette}
+                    recettes = {recettes} />
+        }
     }
 
     render () {
@@ -77,12 +95,7 @@ class Admin extends Component {
                 <AjouterRecette ajouterRecette={ajouterRecette} chef={this.state.chef} username={this.props.pseudo}/>
                 {
                     Object.keys(recettes)
-                        .map(key => <AdminForm 
-                            key={key}
-                            id={key}
-                            majRecette = {majRecette}
-                            supprimerRecette = {supprimerRecette}
-                            recettes = {recettes} />)
+                        .map(key => this.filtrerRecettes(key))
                 }
                 <footer>
                     {logout}
