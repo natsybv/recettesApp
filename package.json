@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^8.6.2",
+    "firebase": "^8.10.1",
     "grpc": "^1.24.10",
     "prop-types": "^15.6.2",
     "re-base": "^4.0.0",
